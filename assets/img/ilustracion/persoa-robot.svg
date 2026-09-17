@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="120" height="150" role="img" aria-label="Ilustración: unha rapaza cun robot">
+  <title>Ilustración: unha rapaza cun robot</title>
+  <!-- Ilustración plana, coherente co logo: nada de fotos de menores. -->
+  <g fill="none" stroke="#1e2a44" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M53 56h14v22H53z" fill="#f3c9a6" stroke="none"/>
+    <path d="M42 138V88a18 18 0 0 1 36 0v50" fill="#2fa84f" stroke="none"/>
+    <path d="M42 138V88a18 18 0 0 1 36 0v50"/>
+    <path d="M48 138v-12M72 138v-12" />
+    <circle cx="60" cy="52" r="19" fill="#f3c9a6" stroke="none"/>
+    <circle cx="60" cy="52" r="19"/>
+    <path d="M41 50a19 19 0 0 1 38 0c0-6-4-9-10-10-5-1-9 3-14 2-6-1-9 2-14 8z" fill="#3a2a1e" stroke="none"/>
+    <path d="M41 50a19 19 0 0 1 38 0c0-6-4-9-10-10-5-1-9 3-14 2-6-1-9 2-14 8z"/>
+    <circle cx="53" cy="52" r="2.2" fill="#1e2a44" stroke="none"/>
+    <circle cx="67" cy="52" r="2.2" fill="#1e2a44" stroke="none"/>
+    <path d="M55 60q5 4 10 0"/>
+    <path d="M44 100 30 112"/>
+    <path d="M76 100l14 8"/>
+  </g>
+  <!-- o robot -->
+  <g>
+    <rect x="76" y="100" width="30" height="26" rx="6" fill="#f28c28" stroke="#1e2a44" stroke-width="2.4"/>
+    <circle cx="85" cy="111" r="3" fill="#fff" stroke="#1e2a44" stroke-width="2"/>
+    <circle cx="97" cy="111" r="3" fill="#fff" stroke="#1e2a44" stroke-width="2"/>
+    <path d="M85 120h12" stroke="#1e2a44" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M91 100v-7" stroke="#1e2a44" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="91" cy="90" r="3.4" fill="#e0463c" stroke="#1e2a44" stroke-width="2.2"/>
+    <path d="M82 126v6M100 126v6" stroke="#1e2a44" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+</svg>

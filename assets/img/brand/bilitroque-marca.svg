@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Espazo Bilitroque">
+  <title>Espazo Bilitroque</title>
+  <!-- Marca compacta: a coroa de burbullas do logo, sen o wordmark.
+       As cores son as do logo orixinal e superpóñense en multiply,
+       igual que alí. Serve de favicon e de marca na cabeceira. -->
+  <rect width="100" height="100" fill="#fff"/>
+  <g style="mix-blend-mode:multiply">
+    <circle cx="30" cy="24" r="15" fill="#f28c28"/>
+    <circle cx="56" cy="20" r="16" fill="#2fa84f"/>
+    <circle cx="76" cy="34" r="12" fill="#7b4fbf"/>
+    <circle cx="82" cy="57" r="11" fill="#2f80ed"/>
+    <circle cx="68" cy="77" r="13" fill="#e0463c"/>
+    <circle cx="44" cy="82" r="12" fill="#3bb8a9"/>
+    <circle cx="22" cy="68" r="14" fill="#f7d33d"/>
+    <circle cx="17" cy="43" r="11" fill="#f48fb1"/>
+  </g>
+  <circle cx="50" cy="50" r="21" fill="#fff"/>
+  <!-- a «B» redondeada do wordmark, no oco branco -->
+  <path d="M41 38h10.5c4.6 0 7.5 2.4 7.5 6.1 0 2.4-1.2 4.2-3.3 5.1 2.7.8 4.3 2.9 4.3 5.7 0 4.2-3.2 6.9-8.2 6.9H41a2 2 0 0 1-2-2V40a2 2 0 0 1 2-2zm4.4 5.4v4.9h5c1.7 0 2.8-1 2.8-2.5s-1.1-2.4-2.8-2.4zm0 9.8v5.4h5.6c1.9 0 3-1 3-2.7s-1.1-2.7-3-2.7z" fill="#5fbdb0"/>
+</svg>

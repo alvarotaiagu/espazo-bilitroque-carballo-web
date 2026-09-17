@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="120" height="150" role="img" aria-label="Ilustración: un rapaz cunha cámara">
+  <title>Ilustración: un rapaz cunha cámara</title>
+  <g fill="none" stroke="#1e2a44" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M53 56h14v22H53z" fill="#8d5a34" stroke="none"/>
+    <path d="M40 138V88a20 19 0 0 1 40 0v50" fill="#e0463c" stroke="none"/>
+    <path d="M40 138V88a20 19 0 0 1 40 0v50"/>
+    <path d="M47 138v-10M73 138v-10"/>
+    <circle cx="60" cy="52" r="19" fill="#8d5a34" stroke="none"/>
+    <circle cx="60" cy="52" r="19"/>
+    <path d="M42 45q6-13 18-13t18 13q-5-4-18-4t-18 4z" fill="#6b3f2a" stroke="none"/>
+    <path d="M42 45q6-13 18-13t18 13q-5-4-18-4t-18 4z"/>
+    <circle cx="53" cy="52" r="2.2" fill="#1e2a44" stroke="none"/>
+    <circle cx="67" cy="52" r="2.2" fill="#1e2a44" stroke="none"/>
+    <path d="M55 60q5 4 10 0"/>
+    <path d="M40 100 28 114M80 100l12 14"/>
+  </g>
+  <g>
+    <path d="M34 108h52a5 5 0 0 1 5 5v18a5 5 0 0 1-5 5H34a5 5 0 0 1-5-5v-18a5 5 0 0 1 5-5z" fill="#f7d33d" stroke="#1e2a44" stroke-width="2.4"/>
+    <path d="M48 108l4-6h16l4 6" fill="#f7d33d" stroke="#1e2a44" stroke-width="2.4" stroke-linejoin="round"/>
+    <circle cx="60" cy="122" r="9" fill="#fff" stroke="#1e2a44" stroke-width="2.4"/>
+    <circle cx="60" cy="122" r="4" fill="#2f80ed" stroke="none"/>
+    <circle cx="81" cy="115" r="2.4" fill="#e0463c" stroke="none"/>
+  </g>
+</svg>

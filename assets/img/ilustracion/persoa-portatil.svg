@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="120" height="150" role="img" aria-label="Ilustración: un rapaz cun portátil">
+  <title>Ilustración: un rapaz cun portátil</title>
+  <g fill="none" stroke="#1e2a44" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M53 56h14v22H53z" fill="#c98c5e" stroke="none"/>
+    <path d="M40 138V86a20 18 0 0 1 40 0v52" fill="#2f80ed" stroke="none"/>
+    <path d="M40 138V86a20 18 0 0 1 40 0v52"/>
+    <path d="M47 138v-10M73 138v-10"/>
+    <circle cx="60" cy="50" r="19" fill="#c98c5e" stroke="none"/>
+    <circle cx="60" cy="50" r="19"/>
+    <path d="M41 46q4-16 19-16t19 16q-4-6-19-6t-19 6z" fill="#1f1b18" stroke="none"/>
+    <path d="M41 46q4-16 19-16t19 16q-4-6-19-6t-19 6z"/>
+    <circle cx="53" cy="50" r="2.2" fill="#1e2a44" stroke="none"/>
+    <circle cx="67" cy="50" r="2.2" fill="#1e2a44" stroke="none"/>
+    <path d="M55 58q5 4 10 0"/>
+    <path d="M40 98 28 108M80 98l12 10"/>
+  </g>
+  <g>
+    <path d="M36 110h48v22H36z" fill="#fff" stroke="#1e2a44" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M44 118h20M44 125h28" stroke="#7b4fbf" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M28 132h64l6 8H22z" fill="#f7d33d" stroke="#1e2a44" stroke-width="2.4" stroke-linejoin="round"/>
+  </g>
+</svg>

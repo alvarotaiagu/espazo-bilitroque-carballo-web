@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Páxina non atopada · Espazo Bilitroque</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light only">
+<link rel="icon" href="/espazo-bilitroque-carballo-web/assets/img/brand/bilitroque-marca.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --tinta:#1e2a44; --laranxa:#f28c28; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100svh; background: #fff; color: var(--tinta);
+    font-family: "Nunito", system-ui, sans-serif; font-weight: 600;
+    display: grid; place-items: center; text-align: center; padding: 2rem;
+  }
+  .coroa { position: relative; width: min(18rem, 70vw); aspect-ratio: 1; margin-bottom: 2rem; }
+  .coroa span { position: absolute; border-radius: 50%; mix-blend-mode: multiply; aspect-ratio: 1; }
+  .n {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: "Fredoka", sans-serif; font-weight: 600;
+    font-size: clamp(3.5rem, 14vw, 5.5rem); color: var(--tinta);
+    text-shadow: 0 0 1rem #fff, 0 0 1rem #fff, 0 0 2rem #fff;
+  }
+  h1 { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(1.6rem, 5vw, 2.4rem); margin: 0 0 .6rem; }
+  p { color: #5a6782; max-width: 34ch; margin: 0 auto 1.75rem; }
+  a.btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600;
+    background: var(--laranxa); color: #fff; text-decoration: none;
+    padding: .9rem 1.7rem; border-radius: 999px;
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="coroa" aria-hidden="true">
+      <span style="background:#f28c28;left:4%;top:12%;width:30%"></span>
+      <span style="background:#2fa84f;left:32%;top:2%;width:28%"></span>
+      <span style="background:#7b4fbf;left:62%;top:14%;width:26%"></span>
+      <span style="background:#2f80ed;left:70%;top:48%;width:24%"></span>
+      <span style="background:#e0463c;left:44%;top:66%;width:26%"></span>
+      <span style="background:#f7d33d;left:8%;top:54%;width:28%"></span>
+      <span class="n" style="background:none;mix-blend-mode:normal">404</span>
+    </div>
+    <h1>Esta burbulla rebentou</h1>
+    <p>A páxina que buscas non existe. Volve ao inicio e segue por aí.</p>
+    <a class="btn" href="/espazo-bilitroque-carballo-web/">Ir ao inicio</a>
+  </main>
+</body>
+</html>

@@ -32,13 +32,15 @@
       mapaTitulo: "Mapa: Espazo Bilitroque, Rúa Perú 14, Carballo",
       fNome: "Nome", fIdade: "Idade", fTel: "Teléfono", fArea: "Área",
       fAsunto: "Reserva de praza · ",
-      fAviso: "Ábrese o teu programa de correo cunha mensaxe preparada. Se non se abre, escribe a espazobilitroque@gmail.com ou chama ao 722 482 607."
+      fAviso: "Ábrese o teu programa de correo cunha mensaxe preparada. Se non se abre, escribe a espazobilitroque@gmail.com ou chama ao 722 482 607.",
+      progreso: function (p) { return "Volver arriba · levas o " + p + " % da páxina"; }
     },
     es: {
       mapaTitulo: "Mapa: Espazo Bilitroque, Rúa Perú 14, Carballo",
       fNome: "Nombre", fIdade: "Edad", fTel: "Teléfono", fArea: "Área",
       fAsunto: "Reserva de plaza · ",
-      fAviso: "Se abre tu programa de correo con un mensaje preparado. Si no se abre, escribe a espazobilitroque@gmail.com o llama al 722 482 607."
+      fAviso: "Se abre tu programa de correo con un mensaje preparado. Si no se abre, escribe a espazobilitroque@gmail.com o llama al 722 482 607.",
+      progreso: function (p) { return "Volver arriba · llevas el " + p + " % de la página"; }
     }
   }[LG];
 
@@ -432,6 +434,104 @@
     });
   }
 
+  /* ---------- Aro de progreso ----------
+     Cada sección é un tramo do aro, coa súa cor e co ancho que
+     realmente ocupa no percorrido da páxina. O tramo píntase recortando
+     a súa stroke-dasharray ao que se leva percorrido del.
+
+     Vai a parte de GSAP a propósito: é información, non adorno, así que
+     ten que funcionar tamén sen GSAP e con movemento reducido. Móvese
+     nun requestAnimationFrame para non medir nada dentro do scroll. */
+  function initProgreso() {
+    const caixa = $(".progreso");
+    if (!caixa) return;
+    const grupo = $(".progreso-tramos", caixa);
+    const cifra = $(".progreso-cifra b", caixa);
+    const seccions = $$("[data-progreso-cor]");
+    if (!grupo || !cifra || !seccions.length) return;
+
+    const NS = "http://www.w3.org/2000/svg";
+    const R = 44;
+    const C = 2 * Math.PI * R;
+    let tramos = [];
+    let ultimoDecimo = -1;
+
+    function alturaScroll() {
+      return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    }
+
+    /* onde empeza e remata cada tramo, en fracción do scroll total */
+    function mide() {
+      const total = alturaScroll();
+      grupo.textContent = "";
+      const topes = seccions.map(
+        (sec) => sec.getBoundingClientRect().top + window.scrollY);
+      tramos = seccions.map((sec, i) => {
+        const ini = i === 0 ? 0 : Math.min(1, topes[i] / total);
+        const fin = i === seccions.length - 1 ? 1 : Math.min(1, topes[i + 1] / total);
+        const c = document.createElementNS(NS, "circle");
+        c.setAttribute("cx", "50");
+        c.setAttribute("cy", "50");
+        c.setAttribute("r", String(R));
+        c.setAttribute("stroke", sec.dataset.progresoCor || "#1e2a44");
+        c.setAttribute("stroke-dasharray", "0 " + C);
+        c.setAttribute("stroke-dashoffset", String(-ini * C));
+        grupo.appendChild(c);
+        return { ini: ini, fin: Math.max(ini, fin), el: c };
+      });
+    }
+
+    function pinta() {
+      const p = Math.min(1, Math.max(0, window.scrollY / alturaScroll()));
+      tramos.forEach((t) => {
+        const feito = Math.max(0, Math.min(p, t.fin) - t.ini);
+        t.el.setAttribute("stroke-dasharray", (feito * C) + " " + C);
+      });
+      const pc = Math.round(p * 100);
+      if (cifra.textContent !== String(pc)) cifra.textContent = String(pc);
+      /* a etiqueta só cambia cada 10 %: se non, o lector de pantalla
+         quedaría repetindo un número distinto en cada frame */
+      const decimo = Math.round(p * 10);
+      if (decimo !== ultimoDecimo) {
+        ultimoDecimo = decimo;
+        caixa.setAttribute("aria-label", T.progreso(pc));
+      }
+      /* no hero non pinta nada: aparece cando xa hai algo que medir */
+      caixa.classList.toggle("is-visible", window.scrollY > window.innerHeight * 0.4);
+    }
+
+    /* que non quede debaixo do aviso de cookies */
+    function apartaDoAviso() {
+      const aviso = $(".cookie-banner");
+      const alto = aviso && !aviso.hidden ? aviso.offsetHeight : 0;
+      html.style.setProperty("--progreso-baixo", alto ? (alto + 16) + "px" : "1rem");
+    }
+
+    let pedido = false;
+    function aoRolar() {
+      if (pedido) return;
+      pedido = true;
+      requestAnimationFrame(() => { pedido = false; pinta(); });
+    }
+
+    caixa.hidden = false;
+    mide();
+    pinta();
+    apartaDoAviso();
+    window.addEventListener("scroll", aoRolar, { passive: true });
+    window.addEventListener("resize", () => { mide(); pinta(); apartaDoAviso(); });
+    const ack = $(".cookie-ack");
+    if (ack) ack.addEventListener("click", apartaDoAviso);
+
+    caixa.addEventListener("click", () => {
+      if (window.__lenis) window.__lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    });
+
+    /* o alto real da páxina non é firme ata que asentan fontes e imaxes */
+    window.addEventListener("load", () => { mide(); pinta(); apartaDoAviso(); });
+  }
+
   /* ---------- Marquee lento ----------
      A pista leva o contido dúas veces, así que ir de 0 a -50 % é un
      bucle exacto. Con GSAP en vez de CSS para que Lenis e o resto
@@ -447,6 +547,7 @@
   function initLenis() {
     if (!motion || typeof Lenis === "undefined") return;
     const lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 0.95 });
+    window.__lenis = lenis;   /* o aro de progreso volve arriba con el */
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -466,6 +567,7 @@
      Espérase polas fontes: se non, o reparto por caracteres mídese coa
      fonte de respaldo e o titular salta cando entra Fredoka. */
   function arranca() {
+    initProgreso();
     initLenis();
     initHero();
     initParallax();

@@ -160,7 +160,7 @@
 <main id="contido">
 
 <!-- ============ HERO: A COROA DE BURBULLAS ============ -->
-<section class="hero" id="inicio">
+<section class="hero" id="inicio" data-progreso-cor="#f28c28">
   <div class="envoltorio hero-in">
 
     <div class="coroa" aria-hidden="true">
@@ -274,7 +274,7 @@
 </div>
 
 <!-- ============ QUE FACEMOS ============ -->
-<section class="seccion areas" id="areas">
+<section class="seccion areas" id="areas" data-progreso-cor="#2fa84f">
   <div class="envoltorio">
     <div class="seccion-cabeza">
       <span class="antetitulo">Que facemos</span>
@@ -461,7 +461,7 @@
 </div>
 
 <!-- ============ PREZOS ============ -->
-<section class="seccion seccion-gris" id="prezos" style="--cor:var(--verde)">
+<section class="seccion seccion-gris" id="prezos" style="--cor:var(--verde)" data-progreso-cor="#2f80ed">
   <div class="envoltorio">
     <div class="seccion-cabeza">
       <span class="antetitulo">Prezos</span>
@@ -537,7 +537,7 @@
 </section>
 
 <!-- ============ CAMPUS FUTURO 2026 ============ -->
-<section class="seccion campus" id="campus">
+<section class="seccion campus" id="campus" data-progreso-cor="#3bb8a9">
   <div class="envoltorio">
     <div class="seccion-cabeza">
       <span class="antetitulo">Credencial</span>
@@ -592,7 +592,7 @@
 </div>
 
 <!-- ============ IMPRESIÓN 3D BAIXO DEMANDA ============ -->
-<section class="seccion seccion-gris tres-d" id="tres-d">
+<section class="seccion seccion-gris tres-d" id="tres-d" data-progreso-cor="#7b4fbf">
   <div class="envoltorio">
     <div class="tres-d-escena">
       <div>
@@ -625,7 +625,7 @@
 </section>
 
 <!-- ============ ADULTOS ============ -->
-<section class="seccion adultos" id="adultos">
+<section class="seccion adultos" id="adultos" data-progreso-cor="#e0463c">
   <div class="envoltorio">
     <div class="adultos-escena">
       <div>
@@ -656,7 +656,7 @@
 </section>
 
 <!-- ============ O ESPAZO (fotografía) ============ -->
-<section class="seccion seccion-gris" id="espazo" style="--cor:var(--azul)">
+<section class="seccion seccion-gris" id="espazo" style="--cor:var(--azul)" data-progreso-cor="#f7d33d">
   <div class="envoltorio">
     <div class="seccion-cabeza">
       <span class="antetitulo">O espazo</span>
@@ -686,7 +686,7 @@
 </section>
 
 <!-- ============ RESEÑAS ============ -->
-<section class="seccion reseñas" id="resenas">
+<section class="seccion reseñas" id="resenas" data-progreso-cor="#f48fb1">
   <div class="envoltorio">
     <div class="seccion-cabeza" style="justify-items:center;text-align:center;margin-inline:auto">
       <span class="antetitulo">Reseñas</span>
@@ -720,7 +720,7 @@
 </section>
 
 <!-- ============ CONTACTO ============ -->
-<section class="seccion seccion-gris contacto" id="contacto">
+<section class="seccion seccion-gris contacto" id="contacto" data-progreso-cor="#2f80ed">
   <div class="envoltorio">
     <div class="seccion-cabeza">
       <span class="antetitulo">Contacto</span>
@@ -904,6 +904,17 @@
     <span class="creditos">Fotografía de arquivo (Pexels). Ilustración propia.</span>
   </div>
 </footer>
+
+<!-- Aro de progreso: cada sección é un tramo da súa cor, así o total
+     de páxina percorrida lese tamén como «por onde vas». Nace [hidden]
+     e só o destapa o JS, porque sen JS non se enchería nunca. -->
+<button class="progreso" type="button" hidden aria-label="Volver arriba">
+  <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <circle class="progreso-pista" cx="50" cy="50" r="44"></circle>
+    <g class="progreso-tramos"></g>
+  </svg>
+  <span class="progreso-cifra" aria-hidden="true"><b>0</b><i>%</i></span>
+</button>
 
 <a class="call-fab" href="tel:+34722482607">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>

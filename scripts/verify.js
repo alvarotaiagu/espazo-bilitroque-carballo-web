@@ -96,6 +96,58 @@ const ok = (b, t, extra) => {
     return c.length === 7 && c.every((e) => e.textContent.trim() === e.dataset.valor);
   }), 'os contadores de prezos paran no valor real');
 
+  /* ---- aro de progreso ---- */
+  ok(await page.evaluate(() => {
+    const c = document.querySelector('.progreso');
+    return c && !c.hidden && document.querySelectorAll('.progreso-tramos circle').length === 9;
+  }), 'o aro de progreso ten os 9 tramos, un por sección');
+  ok(await page.evaluate(() => {
+    const cores = [...document.querySelectorAll('.progreso-tramos circle')]
+      .map((c) => c.getAttribute('stroke'));
+    return cores.join(',') === '#f28c28,#2fa84f,#2f80ed,#3bb8a9,#7b4fbf,#e0463c,#f7d33d,#f48fb1,#2f80ed';
+  }), 'cada tramo leva a cor da súa sección');
+  /* arriba de todo: nin se ve nin está enchido */
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(900);
+  ok(await page.evaluate(() => {
+    const c = document.querySelector('.progreso');
+    return !c.classList.contains('is-visible')
+      && document.querySelector('.progreso-cifra b').textContent === '0';
+  }), 'no hero o aro está agochado e a 0 %');
+  /* ata abaixo: visible e ao 100 %, con todos os tramos completos */
+  /* as imaxes en lazy fan medrar a páxina mentres se baixa: a primeira
+     chegada ao fondo aínda non é o fondo de verdade */
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(1200);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(900);
+  ok(await page.evaluate(() => {
+    const c = document.querySelector('.progreso');
+    return c.classList.contains('is-visible')
+      && document.querySelector('.progreso-cifra b').textContent === '100';
+  }), 'ao final da páxina o aro marca 100 %');
+  ok(await page.evaluate(() => {
+    const C = 2 * Math.PI * 44;
+    return [...document.querySelectorAll('.progreso-tramos circle')].every((c) => {
+      const feito = parseFloat(c.getAttribute('stroke-dasharray'));
+      const ini = -parseFloat(c.getAttribute('stroke-dashoffset'));
+      return feito > 0 && Math.abs((ini + feito) - Math.min(C, ini + feito)) < 1;
+    });
+  }), 'todos os tramos quedan pintados e ningún se sae do aro');
+  /* a metade: nin 0 nin 100, e a etiqueta di a porcentaxe */
+  await page.evaluate(() => window.scrollTo(0, (document.documentElement.scrollHeight - window.innerHeight) / 2));
+  await page.waitForTimeout(900);
+  ok(await page.evaluate(() => {
+    const n = parseInt(document.querySelector('.progreso-cifra b').textContent, 10);
+    return n > 40 && n < 60;
+  }), 'a media páxina o aro marca preto do 50 %');
+  ok(await page.evaluate(() => /\d+ ?%/.test(document.querySelector('.progreso').getAttribute('aria-label') || '')),
+     'a etiqueta do botón leva a porcentaxe');
+  /* e volve arriba ao premelo */
+  await page.click('.progreso');
+  await page.waitForTimeout(2500);
+  ok(await page.evaluate(() => window.scrollY < 40), 'ao premer o aro, a páxina volve arriba');
+
   /* nada de canvas nin filtros gooey */
   ok(await page.evaluate(() => document.querySelectorAll('canvas').length === 0), 'sen canvas');
   ok(await page.evaluate(() => document.querySelectorAll('filter feGaussianBlur').length === 0),
@@ -155,6 +207,13 @@ const ok = (b, t, extra) => {
     const f = [...document.querySelectorAll('[data-flota]')];
     return f.every((e) => parseFloat(getComputedStyle(e).opacity) > 0.9);
   }), 'os bloques «que chegan flotando» vense sen mover nada');
+  /* o aro é contido, non adorno: ten que seguir contando */
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(1000);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(800);
+  ok(await page.evaluate(() => document.querySelector('.progreso-cifra b').textContent === '100'),
+     'o aro de progreso segue contando con movemento reducido');
   await page.close();
 
   /* ---------- 3. sen JavaScript de terceiros (CDN caído) ---------- */
@@ -176,6 +235,12 @@ const ok = (b, t, extra) => {
   }), 'hero, wordmark e titulares seguen visibles');
   ok(await page.evaluate(() => !!document.querySelector('a[href^="tel:"]')
     && !!document.querySelector('a[href^="mailto:"]')), 'teléfono e correo seguen sendo enlaces');
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(1000);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(800);
+  ok(await page.evaluate(() => document.querySelector('.progreso-cifra b').textContent === '100'),
+     'o aro de progreso funciona sen GSAP');
   await page.click('.cookie-ack');
   await page.waitForTimeout(300);
   ok(!(await page.isVisible('.cookie-banner')), 'o aviso de cookies segue pechando');

@@ -1433,6 +1433,80 @@ a.dato:hover { border-color: var(--azul); }
 .call-fab svg { width: 1.1rem; height: 1.1rem; }
 @media (min-width: 62rem) { .call-fab { display: none; } }
 
+/* ---------- 20b. Aro de progreso ----------
+   Unha burbulla máis: un aro branco no que cada sección ocupa o tramo
+   que lle corresponde do percorrido real da páxina, coa súa cor. Ao
+   baixar, o aro énchese; no centro, a porcentaxe.
+
+   Non é un degradado: son nove círculos SVG, cada un coa súa
+   stroke-dasharray recortada ao que leva percorrido ese tramo.
+
+   OLLO: hai un `display: grid` aquí, así que fai falta dicir
+   explicitamente que [hidden] gaña. Se non, o botón nace visible e
+   baleiro cando non hai JS. */
+.progreso {
+  position: fixed;
+  left: 1rem;
+  bottom: var(--progreso-baixo, 1rem);
+  z-index: 65;
+  width: 3.6rem;
+  height: 3.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0.75rem 1.75rem -0.75rem rgba(30, 42, 68, 0.45);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.6rem) scale(0.9);
+  transition: opacity 0.35s, transform 0.35s, visibility 0.35s, bottom 0.3s;
+}
+.progreso[hidden] { display: none; }
+.progreso.is-visible { opacity: 1; visibility: visible; transform: none; }
+.progreso:hover { transform: scale(1.04); }
+
+.progreso svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);   /* que o aro empece ás 12 */
+  overflow: visible;
+}
+.progreso-pista {
+  fill: none;
+  stroke: var(--gris);
+  stroke-width: 8;
+}
+.progreso-tramos circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: butt;
+}
+.progreso-cifra {
+  position: relative;
+  font-family: var(--titular);
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1;
+  color: var(--tinta);
+  letter-spacing: -0.02em;
+}
+.progreso-cifra i {
+  font-style: normal;
+  font-size: 0.68em;
+  opacity: 0.55;
+  margin-left: 0.05em;
+}
+
+@media (max-width: 30rem) {
+  .progreso { width: 3.1rem; height: 3.1rem; }
+  .progreso-cifra { font-size: 0.78rem; }
+}
+
 /* ---------- 21. Aviso de cookies ----------
    O botón ten que funcionar: o banner agóchase con [hidden] e aquí NON
    hai ningún display que poida gañarlle. Por iso a caixa interior é
@@ -1512,6 +1586,10 @@ a.dato:hover { border-color: var(--azul); }
     transition-duration: 0.001ms !important;
   }
   .area-item { position: static; margin-bottom: 1.25rem; }
+  /* o aro segue marcando o progreso: é contido. O que se quita é a
+     entrada flotante e o agrandado ao pasar o rato. */
+  .progreso { transform: none; }
+  .progreso:hover { transform: none; }
   .areas-fondo { display: none; }
   .areas-escena { grid-template-columns: 1fr; }
 }

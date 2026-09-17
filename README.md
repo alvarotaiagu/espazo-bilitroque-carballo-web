@@ -25,6 +25,12 @@ dentro. A web é iso levado a estrutura:
   **só cambia de cor** entre tarxetas (crossfade de cor, non de forma).
 - **Prezos**: oito burbullas coa cifra enorme e contador.
 - **Separadores**: unha fila de círculos pequenos de cores.
+- **Aro de progreso**: unha burbulla fixa abaixo á esquerda na que cada
+  sección ocupa o tramo que realmente ocupa na páxina, coa súa cor. Ao baixar,
+  o aro énchese e no centro vai a porcentaxe; ao premelo, volve arriba. Non é
+  un degradado: son nove círculos SVG recortados con `stroke-dasharray`.
+  Vive fóra de GSAP a propósito — é información, así que segue contando con
+  movemento reducido e co CDN caído.
 
 Modo claro sempre. Sen degradados, sen fondo escuro, sen canvas, sen filtros
 SVG de gooey. `mix-blend-mode: multiply` úsase só sobre branco sólido (as
@@ -78,7 +84,8 @@ NODE_PATH=/c/Users/alvar/node_modules node scripts/shot.js /index.html 1440 d
 `verify.js` comproba, nas dúas linguas e en tres escenarios (normal, movemento
 reducido e CDN caído): que o botón do aviso de cookies pecha de verdade, que o
 mapa non contacta con Google ata que se preme, que as burbullas quedan
-colocadas e as iconas debuxadas, que os contadores paran no valor real, que non
+colocadas e as iconas debuxadas, que os contadores paran no valor real, que o aro de
+progreso ten os nove tramos coa cor de cada sección e chega ao 100 %, que non
 hai canvas nin gooey, que multiply só cae sobre branco, e que non hai
 desprazamento horizontal de 1440 a 360 px.
 

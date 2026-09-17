@@ -14,6 +14,52 @@
      só se activa desde main.js. Se GSAP non carga, a páxina vese enteira.
    ========================================================================== */
 
+/* ---------- 0. Cortina de entrada (preloader) ----------
+   As oito cores das áreas entran en anel, xúntanse no centro e despois O
+   PANEL PÉCHASE COMA UNHA BURBULLA (clip-path circle que encolle ata
+   desaparecer). Non repite a coroa do hero: alí as burbullas ábrense, aquí
+   péchanse, que é o xesto contrario.
+   Os estados «baleiros» viven baixo html.has-motion: sen GSAP a cortina
+   retírase ao intre e ninguén ve un panel a medias.
+   Ollo: .cortina usa display:grid, así que [hidden] precisa a súa regra. */
+.cortina { position: fixed; inset: 0; z-index: 400; display: grid; }
+.cortina[hidden] { display: none; }
+html.cortina-posta { overflow: hidden; }
+
+/* o panel leva a cor, non .cortina: así ao encoller déixase ver a páxina */
+.cortina-panel { position: absolute; inset: 0; display: grid; place-items: center; background: var(--tinta); }
+
+.cortina-anel { position: absolute; width: min(52vw, 24rem); aspect-ratio: 1; }
+.cortina-punto {
+  position: absolute; left: 50%; top: 50%;
+  width: clamp(14px, 2.4vw, 22px); aspect-ratio: 1; border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(calc(var(--i) * 45deg)) translateY(calc(-1 * clamp(110px, 16vw, 190px))) rotate(calc(var(--i) * -45deg));
+  mix-blend-mode: screen;
+}
+.cortina-punto--laranxa { background: var(--laranxa); }
+.cortina-punto--verde { background: var(--verde); }
+.cortina-punto--azul { background: var(--azul); }
+.cortina-punto--morado { background: var(--morado); }
+.cortina-punto--amarelo { background: var(--amarelo); }
+.cortina-punto--vermello { background: var(--vermello); }
+.cortina-punto--turquesa { background: var(--turquesa); }
+.cortina-punto--rosa { background: var(--rosa); }
+
+.cortina-centro { position: relative; display: grid; justify-items: center; gap: .5rem; padding: 0 1.5rem; text-align: center; }
+.cortina-marca { overflow: hidden; padding-bottom: .1em; }
+.cortina-marca span {
+  display: block; font-family: var(--titulo, inherit); font-weight: 800;
+  font-size: clamp(1.7rem, 5.4vw, 3rem); line-height: 1.05; color: var(--branco);
+}
+.cortina-pie { font-size: .7rem; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+
+html.has-motion .cortina-punto { opacity: 0; }
+html.has-motion .cortina-marca span { transform: translateY(112%); }
+html.has-motion .cortina-pie { opacity: 0; }
+
+/* con movemento reducido non debe verse nin un fotograma */
+@media (prefers-reduced-motion: reduce) { .cortina { display: none; } }
+
 /* ---------- 1. Fichas de cor e medidas ---------- */
 :root {
   --branco: #ffffff;

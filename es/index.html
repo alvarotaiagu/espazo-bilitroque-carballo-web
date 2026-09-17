@@ -33,6 +33,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
+<!-- Sen JavaScript non hai quen peche a burbulla: mellor non ensinala. -->
+<noscript><style>.cortina { display: none !important; }</style></noscript>
 
 <script type="application/ld+json">
 {
@@ -110,6 +112,29 @@
 <body>
 
 <a class="saltar" href="#contido">Ir al contenido</a>
+
+<!-- Cortina de entrada: as oito cores das áreas xúntanse e o panel péchase
+     coma unha burbulla. Retírase SEMPRE desde js/main.js; o script de
+     abaixo é a rede de seguridade por se main.js non chega a cargarse. -->
+<div class="cortina" data-cortina aria-hidden="true">
+  <div class="cortina-panel">
+    <div class="cortina-anel" aria-hidden="true">
+    <span class="cortina-punto cortina-punto--laranxa" style="--i:0"></span>
+    <span class="cortina-punto cortina-punto--verde" style="--i:1"></span>
+    <span class="cortina-punto cortina-punto--azul" style="--i:2"></span>
+    <span class="cortina-punto cortina-punto--morado" style="--i:3"></span>
+    <span class="cortina-punto cortina-punto--amarelo" style="--i:4"></span>
+    <span class="cortina-punto cortina-punto--vermello" style="--i:5"></span>
+    <span class="cortina-punto cortina-punto--turquesa" style="--i:6"></span>
+    <span class="cortina-punto cortina-punto--rosa" style="--i:7"></span>
+    </div>
+    <div class="cortina-centro">
+      <p class="cortina-marca"><span>Espazo Bilitroque</span></p>
+      <p class="cortina-pie">Carballo</p>
+    </div>
+  </div>
+</div>
+<script>setTimeout(function(){var c=document.querySelector('[data-cortina]');if(c&&!c.hidden){c.hidden=true;document.documentElement.classList.remove('cortina-posta');}},6000);</script>
 
 <!-- ============ CABECEIRA ============ -->
 <header class="cabecera">

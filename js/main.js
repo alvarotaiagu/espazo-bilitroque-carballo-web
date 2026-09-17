@@ -305,7 +305,10 @@
       8: { x: -340, y: 120, d: 1.3 }
     };
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({ paused: true });
+    /* a coroa non entra ata que a burbulla da cortina empeza a pecharse:
+       o primeiro que se ve da páxina xa está en movemento */
+    cortina.alAbrirse(() => tl.play());
     burbullas.forEach((b) => {
       const e = entradas[b.dataset.b] || { x: 0, y: -300, d: 1.2 };
       tl.fromTo(b,
@@ -330,6 +333,82 @@
       { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.95);
     tl.to(".hero-baixo > *", { opacity: 1, duration: 0.6, stagger: 0.09 }, 1.05);
   }
+
+
+  /* ---------- Cortina de entrada (preloader) ----------
+     Xesto propio: as oito cores das áreas entran en anel, xúntanse no
+     centro e o panel PÉCHASE COMA UNHA BURBULLA. Non repite a coroa do
+     hero: alí as burbullas ábrense, aquí péchanse.
+
+     Dous momentos distintos:
+       · alAbrirse(fn) → cando a burbulla EMPEZA a pecharse, para que a
+         coroa do hero xa estea entrando cando asoma a páxina.
+       · retirar()     → ao rematar: quita o nodo, devolve o scroll e
+         refresca ScrollTrigger, que mediu con overflow:hidden.
+     Retírase SEMPRE (sen GSAP, con reduced-motion ou polo timeout de
+     seguridade): unha cortina atascada tapa o sitio enteiro. */
+  const cortina = (function initCortina() {
+    const el = $("[data-cortina]");
+    const espera = [];
+    let aberta = false;
+    let fora = false;
+
+    function abrir() {
+      if (aberta) return;
+      aberta = true;
+      espera.splice(0).forEach((fn) => { try { fn(); } catch (e) {} });
+    }
+    function retirar() {
+      abrir();
+      if (fora) return;
+      fora = true;
+      if (el) el.hidden = true;
+      html.classList.remove("cortina-posta");
+      if (typeof lenis !== "undefined" && lenis) lenis.start();
+      if (gsapReady) ScrollTrigger.refresh();
+    }
+
+    const api = { alAbrirse: (fn) => (aberta ? fn() : espera.push(fn)) };
+    if (!el || !motion) { retirar(); return api; }
+
+    html.classList.add("cortina-posta");
+
+    const panel = $(".cortina-panel", el);
+    const puntos = $$(".cortina-punto", el);
+    const marca = $(".cortina-marca span", el);
+    const pie = $(".cortina-pie", el);
+    const PECHA = 1.35;
+
+    const tl = gsap.timeline({ onComplete: retirar });
+    if (puntos.length) {
+      tl.to(puntos, { opacity: 1, duration: 0.42, stagger: 0.055, ease: "back.out(1.8)" }, 0);
+      /* xúntanse no centro: o translate do CSS lévaas ao anel, así que aquí
+         abonda con encollelo cun scale sobre o propio anel */
+      const anel = $(".cortina-anel", el);
+      if (anel) tl.to(anel, { scale: 0.08, opacity: 0, duration: 0.8, ease: "power2.inOut" }, 0.72);
+    }
+    /* o estado inicial é un translateY(112%) do CSS e GSAP leo da matriz
+       coma píxeles, non coma yPercent: hai que poñer as dúas a cero ou o
+       nome non sae nunca da súa máscara. */
+    if (marca) tl.to(marca, { y: 0, yPercent: 0, duration: 0.85, ease: "expo.out" }, 0.86);
+    if (pie) tl.to(pie, { opacity: 1, duration: 0.6, ease: "power2.out" }, 1.05);
+
+    tl.add(abrir, PECHA);
+    const centro = $(".cortina-centro", el);
+    if (centro) tl.to(centro, { opacity: 0, scale: 0.94, duration: 0.45, ease: "power2.in" }, PECHA);
+    if (panel) {
+      /* Arranca no 75 %, non no 150 %: en CSS, circle(100%) xa é un radio
+         moito maior que a media diagonal, así que de 150 a ~71 non se ve
+         NADA mudar e a metade da animación pérdese agardando. */
+      tl.fromTo(panel,
+        { clipPath: "circle(75% at 50% 50%)" },
+        { clipPath: "circle(0% at 50% 50%)", duration: 1.0, ease: "power2.inOut", immediateRender: false },
+        PECHA + 0.1);
+    }
+
+    setTimeout(retirar, 5200);
+    return api;
+  })();
 
   /* ---------- Parallax de dous niveis nas burbullas do hero ----------
      Só transform, e moi pouco: as grandes móvense menos que as
